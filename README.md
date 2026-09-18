@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Network Traffic Packet Sniffer & Protocol Analyzer
 
 An educational, modular network packet sniffer and protocol analyzer built in Python. Designed for network engineering students, developers, and security analysts to inspect network traffic, dissect protocol headers (L2 through L7), examine payload content, and understand the fundamentals of data flow across the TCP/IP stack.
@@ -170,3 +171,6 @@ CLIENT                                          SERVER
 Packet sniffing captures raw network frames transmitted across a network interface.
 - **Authorized Use Only**: This software is built for learning, diagnostics, and monitoring on networks and devices you own or have explicit authorization to inspect.
 - **Loopback & Local Traffic**: You can safely capture traffic on `127.0.0.1` (Software Loopback) or your personal Wi-Fi interface.
+=======
+# network-sniffer
+>>>>>>> 73dfd269bff12b193f486eb370d9653c244ef6e5
