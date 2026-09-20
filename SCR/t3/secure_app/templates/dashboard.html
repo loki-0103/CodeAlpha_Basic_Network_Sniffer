@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard (Secure){% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Protected User Dashboard</h2>
+        <p class="card-subtitle">Authenticated Session: <strong>{{ user['username'] }}</strong> (Role: <span class="badge-secure">{{ user['role'] }}</span>)</p>
+    </div>
+
+    <p>
+        Access to this dashboard is strictly guarded by the <code>@login_required</code> session decorator.
+        Session tokens are protected with <code>HttpOnly</code> and <code>SameSite=Lax</code> cookie policies.
+    </p>
+
+    <div class="academic-callout">
+        <h4>🛡️ Remediation Demonstration: Hashed Password Storage</h4>
+        <p>
+            Unlike the vulnerable baseline, the database stores exclusively salted PBKDF2:SHA256 cryptographic hashes.
+            Even in the event of an unauthorized database dump, attackers cannot recover plaintext passwords:
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Cryptographic Password Hash (Werkzeug PBKDF2:SHA256)</th>
+                    <th>Role</th>
+                    <th>Registered At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in all_users %}
+                <tr>
+                    <td>{{ row['id'] }}</td>
+                    <td><strong>{{ row['username'] }}</strong></td>
+                    <td><span class="hash-snippet" title="{{ row['password_hash'] }}">{{ row['password_hash'] }}</span></td>
+                    <td><span class="badge-secure">{{ row['role'] }}</span></td>
+                    <td style="font-size: 0.8rem; color: var(--text-muted);">{{ row['created_at'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+        <a href="{{ url_for('logout') }}" class="btn-primary" style="display: inline-block; text-align: center; text-decoration: none; max-width: 150px;">Sign Out</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+[bandit]
+exclude = .git,__pycache__,.venv,venv,env,screenshots
+skips = 

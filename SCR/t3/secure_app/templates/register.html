@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Register (Secure){% endblock %}
+
+{% block content %}
+<div style="max-width: 480px; margin: 0 auto;">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Create Hardened Account</h2>
+            <p class="card-subtitle">Validated &amp; Hashed Registration Endpoint</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('register') }}">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="3-30 characters (alphanumeric)" required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter complex password" required autocomplete="new-password">
+                <ul class="pwd-rules">
+                    <li>Minimum 8 characters (max 128)</li>
+                    <li>At least 1 uppercase and 1 lowercase letter</li>
+                    <li>At least 1 numerical digit (0-9)</li>
+                    <li>At least 1 special character (!@#$%^&amp;*...)</li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm your password" required autocomplete="new-password">
+            </div>
+
+            <button type="submit" class="btn-primary">Register Securely</button>
+        </form>
+
+        <div class="academic-callout" style="margin-top: 1.5rem; margin-bottom: 0;">
+            <p><strong>🔒 Cryptographic Protection:</strong></p>
+            <p style="font-size: 0.85rem; margin-top: 0.25rem;">
+                Your password will be salted and hashed via PBKDF2:SHA256 before being committed to the database. The raw password is never stored or logged.
+            </p>
+        </div>
+
+        <div class="auth-footer">
+            Already registered? <a href="{{ url_for('login') }}">Sign in here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

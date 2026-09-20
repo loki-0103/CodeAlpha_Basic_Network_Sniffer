@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Home (Vulnerable){% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Flask Authentication Portal</h1>
+        <p class="card-subtitle">Version 1.0 (Intentionally Vulnerable Baseline)</p>
+    </div>
+
+    <p style="margin-bottom: 1.25rem;">
+        Welcome to the <strong>Intentionally Vulnerable Login Application</strong>. This software build demonstrates 
+        the risks of insecure coding practices commonly found in poorly secured Python web backends.
+    </p>
+
+    <div class="academic-callout">
+        <h4>🎯 Security Review Scope</h4>
+        <p>This application contains 7 deliberate vulnerabilities to be identified through static analysis (Bandit) and manual source code review:</p>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+            <li>SQL Injection via String Formatting (<code>CWE-89</code>)</li>
+            <li>Plaintext Password Storage in SQLite (<code>CWE-256</code>)</li>
+            <li>Hardcoded Secret Key &amp; Backdoor Password (<code>CWE-798</code>)</li>
+            <li>Missing Input Validation &amp; Sanitization (<code>CWE-20</code>)</li>
+            <li>Flask Debug Mode Enabled in Production (<code>CWE-489</code>)</li>
+            <li>Verbose Error Handling Disclosing SQL Details (<code>CWE-209</code>)</li>
+            <li>Insecure Session Cookie Flags (<code>CWE-614 / CWE-1004</code>)</li>
+        </ul>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+        {% if session.get('user') %}
+            <a href="{{ url_for('dashboard') }}" class="btn-primary" style="display: inline-block; text-align: center; text-decoration: none; max-width: 200px;">Go to Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="btn-primary" style="display: inline-block; text-align: center; text-decoration: none; max-width: 180px;">Login Portal</a>
+            <a href="{{ url_for('register') }}" style="display: inline-block; text-align: center; text-decoration: none; padding: 0.85rem 1.5rem; background: #334155; color: white; border-radius: 6px; font-weight: 600;">Create Account</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

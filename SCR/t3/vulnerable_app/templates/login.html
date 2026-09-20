@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Login (Vulnerable){% endblock %}
+
+{% block content %}
+<div style="max-width: 480px; margin: 0 auto;">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">User Sign In</h2>
+            <p class="card-subtitle">Vulnerable Authentication Endpoint</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username (e.g., alice)" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter password (e.g., password123)" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Sign In</button>
+        </form>
+
+        <div class="academic-callout" style="margin-top: 1.5rem; margin-bottom: 0;">
+            <p><strong>💡 Academic Review Notes:</strong></p>
+            <p style="font-size: 0.85rem; margin-top: 0.25rem;">
+                Default seeded user: <code>alice</code> / <code>password123</code><br>
+                Admin account: <code>admin</code> / <code>admin123</code><br>
+                Backdoor credential: <code>superuser</code> / <code>HardcodedSuperAdminPassword2026!</code>
+            </p>
+        </div>
+
+        <div class="auth-footer">
+            Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

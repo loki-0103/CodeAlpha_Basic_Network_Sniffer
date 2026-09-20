@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard (Vulnerable){% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">User Dashboard</h2>
+            <p class="card-subtitle">Session Active for: <strong>{{ user['username'] }}</strong> (Role: <span class="badge-insecure">{{ user['role'] }}</span>)</p>
+        </div>
+
+        <p>You have successfully authenticated to the protected dashboard area.</p>
+
+        <div class="academic-callout">
+            <h4>🚨 Vulnerability Demonstration: Plaintext Database Contents</h4>
+            <p>
+                In a secure system, database passwords are irreversibly hashed and salted. Notice below how the 
+                <code>vulnerable.db</code> database stores raw passwords directly in plain text (<code>CWE-256</code>):
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Stored Password (Insecure!)</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in all_users %}
+                    <tr>
+                        <td>{{ row['id'] }}</td>
+                        <td><strong>{{ row['username'] }}</strong></td>
+                        <td><code style="color: #f87171; background: #2d1515; padding: 0.2rem 0.5rem; border-radius: 4px;">{{ row['password'] }}</code></td>
+                        <td>{{ row['role'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <a href="{{ url_for('logout') }}" class="btn-primary" style="display: inline-block; text-align: center; text-decoration: none; max-width: 150px;">Sign Out</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

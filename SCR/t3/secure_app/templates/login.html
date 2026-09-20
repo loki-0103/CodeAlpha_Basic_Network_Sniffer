@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Login (Secure){% endblock %}
+
+{% block content %}
+<div style="max-width: 480px; margin: 0 auto;">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Secure Sign In</h2>
+            <p class="card-subtitle">Protected Authentication Endpoint</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn-primary">Sign In Securely</button>
+        </form>
+
+        <div class="academic-callout" style="margin-top: 1.5rem; margin-bottom: 0;">
+            <p><strong>🛡️ Test Credentials:</strong></p>
+            <p style="font-size: 0.85rem; margin-top: 0.25rem;">
+                Standard User: <code>alice</code> / <code>Alice@Password2026!</code><br>
+                Administrator: <code>admin</code> / <code>Admin@StrongSecret2026!</code>
+            </p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+                All credentials verified against salted PBKDF2:SHA256 hashes using parameterized queries.
+            </p>
+        </div>
+
+        <div class="auth-footer">
+            Need an account? <a href="{{ url_for('register') }}">Register securely here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

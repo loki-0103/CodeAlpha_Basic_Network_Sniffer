@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Home (Secure){% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Hardened Flask Authentication Portal</h1>
+        <p class="card-subtitle">Version 2.0 (Remediated Production Baseline)</p>
+    </div>
+
+    <p style="margin-bottom: 1.25rem;">
+        Welcome to the <strong>Remediated Secure Login Application</strong>. This software build implements 
+        robust defense-in-depth principles to completely mitigate the 7 vulnerabilities present in the vulnerable baseline.
+    </p>
+
+    <div class="features-grid">
+        <div class="feature-box">
+            <h4>🔒 Parameterized Queries</h4>
+            <p>Queries use SQLite positional parameter binding (<code>?</code>), completely preventing SQL Injection (Bandit B608 clean).</p>
+        </div>
+
+        <div class="feature-box">
+            <h4>🔑 PBKDF2 Password Hashing</h4>
+            <p>Passwords hashed with Werkzeug's <code>pbkdf2:sha256</code> salted algorithm, eliminating plaintext credential exposure.</p>
+        </div>
+
+        <div class="feature-box">
+            <h4>🌿 Environment Secrets</h4>
+            <p>Secrets loaded securely via <code>python-dotenv</code> and environment variables; zero hardcoded credentials in source control.</p>
+        </div>
+
+        <div class="feature-box">
+            <h4>🛡️ Input Validation &amp; CSRF</h4>
+            <p>Strict regex whitelist on usernames and multi-factor complexity enforcement on all user-supplied passwords.</p>
+        </div>
+
+        <div class="feature-box">
+            <h4>🚫 Debug Mode Disabled</h4>
+            <p>Interactive Werkzeug debugger disabled (<code>debug=False</code>), preventing remote code execution via debug console.</p>
+        </div>
+
+        <div class="feature-box">
+            <h4>🍪 Secure Cookie Flags</h4>
+            <p>Session cookies configured with <code>HttpOnly=True</code>, <code>SameSite=Lax</code>, and short session lifetime.</p>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+        {% if session.get('user') %}
+            <a href="{{ url_for('dashboard') }}" class="btn-primary" style="display: inline-block; text-align: center; text-decoration: none; max-width: 200px;">Protected Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="btn-primary" style="display: inline-block; text-align: center; text-decoration: none; max-width: 180px;">Secure Login</a>
+            <a href="{{ url_for('register') }}" style="display: inline-block; text-align: center; text-decoration: none; padding: 0.85rem 1.5rem; background: #1e3a5f; color: white; border-radius: 6px; font-weight: 600;">Secure Registration</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vulnerable App{% endblock %} - Secure Coding Review</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Academic Security Banner -->
+    <div class="security-banner">
+        <span class="security-badge">Academic Vulnerable Build</span>
+        <span>⚠️ Intentionally Insecure Demonstration Application (Port 5000) - For Educational Code Review Only</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="nav-brand">
+            <span>🛡️ SecLab</span>
+            <span class="brand-tag">VULNERABLE</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if session.get('user') %}
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}" class="btn-nav">Logout ({{ session['user']['username'] }})</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}" class="btn-nav">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Flash Notifications -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Cybersecurity Academic Project - Task 3: Secure Coding Review &amp; Static Analysis</p>
+        <p style="margin-top: 0.25rem; font-size: 0.8rem; color: #64748b;">Target Environment: Flask + SQLite + Bandit Analyzer</p>
+    </footer>
+</body>
+</html>
